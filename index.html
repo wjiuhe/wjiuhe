@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="William Jiuhe Wang — AI Systems Wrangler | LLM Whisperer | Shipping things that work">
+    <title>~ whoami | William Jiuhe Wang</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border: #30363d;
+            --border-muted: #21262d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-green: #7ee787;
+            --accent-blue: #79c0ff;
+            --accent-purple: #d2a8ff;
+            --accent-red: #ff7b72;
+            --accent-orange: #ffa657;
+            --accent-yellow: #d29922;
+            --accent-cyan: #56d4dd;
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+        }
+        
+        html { 
+            scroll-behavior: smooth;
+            background: var(--bg);
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 14px;
+            min-height: 100vh;
+        }
+        
+        /* CRT Scanline Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,0,0,0.15) 0px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.4;
+        }
+        
+        /* Glow Effect */
+        .glow {
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .glow-green { text-shadow: 0 0 10px var(--accent-green); }
+        .glow-blue { text-shadow: 0 0 10px var(--accent-blue); }
+        .glow-purple { text-shadow: 0 0 10px var(--accent-purple); }
+        
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 0 20px;
+        }
+        
+        nav .nav-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+        }
+        
+        .nav-logo {
+            color: var(--accent-green);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+        
+        /* Terminal Window */
+        .terminal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        .terminal-header {
+            background: var(--bg-tertiary);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        
+        .terminal-title {
+            margin-left: 10px;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+        
+        .terminal-body {
+            padding: 24px;
+        }
+        
+        /* Prompt Style */
+        .prompt {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .prompt-user {
+            color: var(--accent-green);
+        }
+        
+        .prompt-host {
+            color: var(--accent-blue);
+        }
+        
+        .prompt-path {
+            color: var(--accent-purple);
+        }
+        
+        .prompt-symbol {
+            color: var(--text-primary);
+        }
+        
+        .command {
+            color: var(--text-primary);
+        }
+        
+        /* Output Style */
+        .output {
+            margin: 16px 0;
+            padding-left: 0;
+        }
+        
+        /* ASCII Art */
+        .ascii-art {
+            font-size: 10px;
+            line-height: 1.2;
+            color: var(--accent-green);
+            margin-bottom: 24px;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        
+        /* Section Headers */
+        h2 {
+            color: var(--accent-blue);
+            font-size: 16px;
+            font-weight: 600;
+            margin: 40px 0 20px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2::before {
+            content: '#';
+            color: var(--accent-purple);
+        }
+        
+        h3 {
+            color: var(--accent-yellow);
+            font-size: 14px;
+            font-weight: 600;
+            margin: 24px 0 12px 0;
+        }
+        
+        /* Code Blocks */
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+        
+        .code-header {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-muted);
+        }
+        
+        /* Syntax Highlighting */
+        .keyword { color: var(--accent-red); }
+        .function { color: var(--accent-blue); }
+        .string { color: var(--accent-green); }
+        .comment { color: var(--text-muted); font-style: italic; }
+        .number { color: var(--accent-orange); }
+        .variable { color: var(--accent-purple); }
+        
+        /* Lists */
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        ul li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            color: var(--text-secondary);
+        }
+        
+        ul li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-muted);
+            color: var(--text-secondary);
+        }
+        
+        tr:hover td {
+            background: var(--bg-tertiary);
+        }
+        
+        /* Skill Tags */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .skill-tag {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        
+        .skill-tag:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 20px rgba(121, 192, 255, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .card-title {
+            color: var(--accent-yellow);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .card-date {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+        
+        .card-subtitle {
+            color: var(--accent-blue);
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+        
+        /* Links */
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        a:hover {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-tertiary);
+            border-top: 1px solid var(--border);
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            z-index: 100;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Blinking Cursor */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: var(--accent-green);
+            margin-left: 4px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body::before { display: none; }
+            nav { display: none; }
+            .status-bar { display: none; }
+            body { background: white; color: black; }
+            .terminal { border: 1px solid #ccc; box-shadow: none; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .ascii-art { font-size: 8px; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="nav-logo">~/<span style="color: var(--accent-blue)">Jiuhe</span></div>
+            <div class="nav-links">
+                <a href="#about">~/whoami</a>
+                <a href="#expertise">~/arsenal</a>
+                <a href="#experience">~/war-stories</a>
+                <a href="#ai-systems">~/live-agents</a>
+            </div>
+            <button onclick="window.print()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; font-family: inherit;">
+                [print]
+            </button>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-bottom: 60px;">
+        
+        <!-- Main Terminal Window -->
+        <div id="about" class="terminal">
+            <div class="terminal-header">
+                <span class="terminal-dot dot-red"></span>
+                <span class="terminal-dot dot-yellow"></span>
+                <span class="terminal-dot dot-green"></span>
+                <span class="terminal-title">bash — 80x24</span>
+            </div>
+            <div class="terminal-body">
+                
+                <!-- Initial Prompt -->
+                <div class="prompt">
+                    <span class="prompt-user">visitor</span>
+                    <span class="prompt-symbol">@</span>
+                    <span class="prompt-host">github.io</span>
+                    <span class="prompt-symbol">:</span>
+                    <span class="prompt-path">~</span>
+                    <span class="prompt-symbol">$</span>
+                    <span class="command"> whoami</span>
+                </div>
+                
+                <!-- ASCII Art -->
+                <div class="ascii-art glow-green">
+<span style="color: var(--accent-green);">__       __  __  __  __  __</span>
+<span style="color: var(--accent-blue);">|  \  _  |  \|  \|  \|  \|  \</span>
+<span style="color: var(--accent-purple);">| $$ / \ | $$ \$$| $$| $$ \$$</span>  <span style="color: var(--accent-yellow);">______   ______ ____</span>
+<span style="color: var(--accent-orange);">| $$/  $\| $$|  \| $$| $$|  \</span> <span style="color: var(--accent-cyan);">|      \ |      \    \</span>
+<span style="color: var(--accent-green);">| $$  $$$\ $$| $$| $$| $$| $$</span>  <span style="color: var(--accent-blue);">\$$$$$$\| $$$$$$\$$$$\</span>
+<span style="color: var(--accent-purple);">| $$ $$\$$\$$| $$| $$| $$| $$</span> <span style="color: var(--accent-yellow);">/      $$| $$ | $$ | $$</span>
+<span style="color: var(--accent-orange);">| $$$$  \$$$$| $$| $$| $$| $$</span><span style="color: var(--accent-cyan);">|  $$$$$$$| $$ | $$ | $$</span>
+<span style="color: var(--accent-green);">| $$$    \$$$| $$| $$| $$| $$</span> <span style="color: var(--accent-blue);">\$$    $$| $$ | $$ | $$</span>
+<span style="color: var(--accent-purple);"> \$$      \$$ \$$ \$$ \$$ \$$</span>  <span style="color: var(--accent-yellow);">\$$$$$$$ \$$  \$$  \$$</span>
+                </div>
+                
+                <!-- Output -->
+                <div class="output">
+                    <div style="color: var(--accent-green); font-size: 24px; font-weight: 700; margin-bottom: 8px;">
+                        William Jiuhe Wang
+                    </div>
+                    <div style="color: var(--accent-blue); font-size: 16px; margin-bottom: 16px;">
+                        AI Systems Wrangler // LLM Whisperer
+                    </div>
+                    <div style="color: var(--text-secondary); max-width: 600px;">
+                        11+ years shipping code that matters. Production-grade AI systems, real-time data pipelines, 
+                        and scalable infrastructure. Currently hacking on LLMs and distributed systems in fintech.
+                    </div>
+                </div>
+                
+
+                
+            </div>
+        </div>
+
+        <!-- Stats Dashboard -->
+        <div class="prompt" style="margin-bottom: 20px;">
+            <span class="prompt-user">visitor</span>
+            <span class="prompt-symbol">@</span>
+            <span class="prompt-host">github.io</span>
+            <span class="prompt-symbol">:</span>
+            <span class="prompt-path">~</span>
+            <span class="prompt-symbol">$</span>
+            <span class="command"> uname -a</span>
+        </div>
+        
+        <div class="code-block" style="margin-bottom: 40px;">
+            <div style="color: var(--text-muted); margin-bottom: 8px;">Linux github.io 5.15.0-generic #x86_64</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 16px;">
+                <div>
+                    <span style="color: var(--accent-green);">OS:</span> <span style="color: var(--text-secondary);">Distributed Systems</span>
+                </div>
+                <div>
+                    <span style="color: var(--accent-blue);">Kernel:</span> <span style="color: var(--text-secondary);">Python/Java</span>
+                </div>
+                <div>
+                    <span style="color: var(--accent-purple);">Shell:</span> <span style="color: var(--text-secondary);">LangChain</span>
+                </div>
+                <div>
+                    <span style="color: var(--accent-orange);">Uptime:</span> <span style="color: var(--text-secondary);">11+ years</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expertise Section -->
+        <h2 id="expertise">$ ~/arsenal</h2>
+        
+        <div class="prompt" style="margin-bottom: 20px;">
+            <span class="prompt-user">visitor</span>
+            <span class="prompt-symbol">@</span>
+            <span class="prompt-host">github.io</span>
+            <span class="prompt-symbol">:</span>
+            <span class="prompt-path">~/arsenal</span>
+            <span class="prompt-symbol">$</span>
+            <span class="command"> ls -la</span>
+        </div>
+        
+        <div class="code-block">
+            <div style="color: var(--text-muted); margin-bottom: 12px;">drwxr-xr-x 6 wjw staff 192 Feb 13 21:30 .</div>
+            
+            <div style="margin-bottom: 16px;">
+                <div style="color: var(--accent-purple); font-weight: 600; margin-bottom: 8px;">ai_agents/</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">LangChain</span>
+                    <span class="skill-tag">LangGraph</span>
+                    <span class="skill-tag">Dify</span>
+                    <span class="skill-tag">Guardrail</span>
+                    <span class="skill-tag">Kilo Code</span>
+                    <span class="skill-tag">OpenCode</span>
+                    <span class="skill-tag">Claude Code</span>
+                    <span class="skill-tag">Kimi</span>
+                    <span class="skill-tag">GLM</span>
+                    <span class="skill-tag">Minimax</span>
+                    <span class="skill-tag">Copilot</span>
+                    <span class="skill-tag">Cursor</span>
+                    <span class="skill-tag">Notion</span>
+                    <span class="skill-tag">Gemini Enterprise</span>
+                    <span class="skill-tag">Nano Banana</span>
+                    <span class="skill-tag">Superpowers</span>
+                    <span class="skill-tag">Bmad</span>
+                    <span class="skill-tag">Openspec</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <div style="color: var(--accent-blue); font-weight: 600; margin-bottom: 8px;">mlops/</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Knative</span>
+                    <span class="skill-tag">Kserve</span>
+                    <span class="skill-tag">Kubernetes</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Prometheus</span>
+                    <span class="skill-tag">Grafana</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <div style="color: var(--accent-cyan); font-weight: 600; margin-bottom: 8px;">data_platforms/</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Apache Pulsar</span>
+                    <span class="skill-tag">Kafka</span>
+                    <span class="skill-tag">CDC</span>
+                    <span class="skill-tag">Debezium</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MongoDB</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <div style="color: var(--accent-green); font-weight: 600; margin-bottom: 8px;">cloud/</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">GCP</span>
+                    <span class="skill-tag">AliCloud</span>
+                    <span class="skill-tag">Helm</span>
+                    <span class="skill-tag">Istio</span>
+                </div>
+            </div>
+            
+            <div>
+                <div style="color: var(--accent-yellow); font-weight: 600; margin-bottom: 8px;">languages/</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Bash</span>
+                    <span class="skill-tag">Prompt</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience Section -->
+        <h2 id="experience">$ ~/battle-log</h2>
+        
+        <div class="prompt" style="margin-bottom: 20px;">
+            <span class="prompt-user">visitor</span>
+            <span class="prompt-symbol">@</span>
+            <span class="prompt-host">github.io</span>
+            <span class="prompt-symbol">:</span>
+            <span class="prompt-path">~/war-stories</span>
+            <span class="prompt-symbol">$</span>
+            <span class="command"> git log --oneline --graph</span>
+        </div>
+        
+        <!-- WeLab -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">WeLab Bank</div>
+                    <div class="card-subtitle">Senior Manager, Technology</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="card-date">Nov 2022 - Present</div>
+                    <span style="color: var(--accent-green); font-size: 11px;">● CURRENT</span>
+                </div>
+            </div>
+            
+            <div style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+                One of HK's first batch of virtual banks. Led critical banking infrastructure modernization and AI-driven innovation.
+            </div>
+            
+            <div class="code-block" style="margin: 0;">
+                <div style="color: var(--accent-purple); margin-bottom: 8px;"># ai_agents/</div>
+                <ul style="margin-bottom: 16px;">
+                    <li>Built AI agents for loan processing, credit assistance, and FX comparison</li>
+                    <li>LangChain + LLMs for natural language understanding and context-aware conversations</li>
+                    <li>Computer vision for document OCR and fraud detection</li>
+                    <li>Explainable AI for regulatory compliance</li>
+                </ul>
+                
+                <div style="color: var(--accent-blue); margin-bottom: 8px;"># data_infra/</div>
+                <ul style="margin-bottom: 16px;">
+                    <li>T24 core banking migration (NuoDB → PostgreSQL)</li>
+                    <li>Message queue migration from Solace to Apache Pulsar and ActiveMQ</li>
+                    <li>CDC with Debezium for real-time sync</li>
+                    <li>Event-driven document management platform</li>
+                </ul>
+                
+                <div style="color: var(--accent-yellow); margin-bottom: 8px;"># reward_system/</div>
+                <ul style="margin-bottom: 16px;">
+                    <li>Event-driven rule-based reward system with n8n workflow integration</li>
+                    <li>Event-driven reward triggers based on customer actions</li>
+                    <li>Real-time reward balance and history tracking</li>
+                </ul>
+
+                <div style="color: var(--accent-green); margin-bottom: 8px;"># wins/</div>
+                <ul>
+                    <li>Major T24 version upgrade (R19 → R22)</li>
+                    <li>T24 Integration Hub design and implementation</li>
+                    <li>IAM refactoring for enhanced security and UX</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Lenovo -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Lenovo</div>
+                    <div class="card-subtitle">Advisory Researcher (Band 8)</div>
+                </div>
+                <div class="card-date">Jun 2018 - Nov 2022</div>
+            </div>
+
+            <div style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+                Developed LeapAI platform for enterprise ML operations and model management.
+            </div>
+
+            <ul>
+                <li>Production-grade model deployment module with Knative/Kserve</li>
+                <li>Model Hub supporting TensorFlow, PyTorch, Scikit-Learn, ONNX</li>
+                <li>Batch prediction with Spark on Kubernetes</li>
+                <li>Event system and monitoring (Prometheus, Grafana, AlertManager)</li>
+                <li>Automated E2E testing with Playwright</li>
+            </ul>
+        </div>
+
+        <!-- Cypress Jade & NaturalFarm -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Cypress Jade (HK875) & NaturalFarm</div>
+                    <div class="card-subtitle">Technical Lead</div>
+                </div>
+                <div class="card-date">Jul 2014 - 2018</div>
+            </div>
+
+            <div style="color: var(--text-secondary); margin-bottom: 16px; font-size: 13px;">
+                Led development of company internal platforms for order processing and farm management.
+            </div>
+
+            <ul>
+                <li>Order Processing Platform – end-to-end lifecycle management (ordering, production, logistics, invoicing)</li>
+                <li>Farm Management System – inventory, task planning, employee performance tracking</li>
+                <li>Internal Statistics Platform – business sector health indicators and reporting</li>
+                <li>EDI System Integration – electronic data interchange with partners</li>
+            </ul>
+        </div>
+
+        <!-- AI Systems Section -->
+        <h2 id="ai-systems">$ ~/live-agents</h2>
+        
+        <div class="prompt" style="margin-bottom: 20px;">
+            <span class="prompt-user">visitor</span>
+            <span class="prompt-symbol">@</span>
+            <span class="prompt-host">github.io</span>
+            <span class="prompt-symbol">:</span>
+            <span class="prompt-path">~/live-agents</span>
+            <span class="prompt-symbol">$</span>
+            <span class="command"> docker ps --format "table &#123;&#123;.Names&#125;&#125;\\t&#123;&#123;.Status&#125;&#125;\\t&#123;&#123;.Ports&#125;&#125;"</span>
+        </div>
+        
+        <table style="margin-bottom: 20px;">
+            <thead>
+                <tr>
+                    <th style="width: 25%;">CONTAINER ID</th>
+                    <th style="width: 25%;">IMAGE</th>
+                    <th style="width: 15%;">STATUS</th>
+                    <th style="width: 35%;">NOTES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span style="color: var(--accent-green);">loan-sales-bot</span></td>
+                    <td>langchain-gpt4:latest</td>
+                    <td><span style="color: var(--accent-green);">Running</span></td>
+                    <td>"How much can I borrow?" × ∞</td>
+                </tr>
+                <tr>
+                    <td><span style="color: var(--accent-blue);">verification-agent</span></td>
+                    <td>claude-vision:latest</td>
+                    <td><span style="color: var(--accent-green);">Running</span></td>
+                    <td>Judges your docs harshly but fairly</td>
+                </tr>
+                <tr>
+                    <td><span style="color: var(--accent-purple);">credit-assistant</span></td>
+                    <td>llamaindex-openai:latest</td>
+                    <td><span style="color: var(--accent-green);">Running</span></td>
+                    <td>Explains why the answer is "maybe"</td>
+                </tr>
+                <tr>
+                    <td><span style="color: var(--accent-orange);">fx-comparison</span></td>
+                    <td>pandas-fastapi:latest</td>
+                    <td><span style="color: var(--accent-green);">Running</span></td>
+                    <td>Finds you the best rate (no cap)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="code-block" style="background: transparent; border-style: dashed;">
+            <div style="color: var(--accent-yellow); margin-bottom: 8px;"># ps aux | grep consciousness</div>
+            <div style="color: var(--text-muted);">These agents are not sentient (yet). They just work really well.</div>
+        </div>
+
+        <!-- Education & Awards -->
+        <h2>$ ~/credentials</h2>
+        
+        <div class="code-block">
+            <div style="color: var(--text-muted); margin-bottom: 12px;">$ cat creds.json | jq</div>
+            <div style="color: var(--text-primary);">
+                <div>{</div>
+                <div style="margin-left: 20px;">
+                    <span class="variable">"master"</span>: <span class="string">"Quantitative Analysis in Business"</span>,
+                </div>
+                <div style="margin-left: 20px;">
+                    <span class="variable">"university"</span>: <span class="string">"City University of Hong Kong"</span>,
+                </div>
+                <div style="margin-left: 20px;">
+                    <span class="variable">"bachelor"</span>: <span class="string">"Applied Physics (First Class Honors)"</span>
+                </div>
+                <div>}</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <div style="color: var(--accent-yellow); margin-bottom: 12px;"># loot-drops</div>
+            <ul>
+                <li><span style="color: var(--accent-green);">2020</span> — Technical Elite badge, Lenovo</li>
+                <li><span style="color: var(--accent-green);">2019</span> — MVP of the Year, Lenovo</li>
+                <li><span style="color: var(--accent-green);">2012</span> — First Class Honors, CityU</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 12px;">
+            <div style="margin-bottom: 12px;">
+                <span style="color: var(--accent-green);">❯</span> Ready for input<span class="cursor"></span>
+            </div>
+            <div>
+                Powered by <span style="color: var(--accent-purple);">OpenCode</span> + <span style="color: var(--accent-blue);">Kimi</span> • <span style="color: var(--text-muted);">Human-in-the-loop: enabled</span>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar no-print">
+        <div class="status-item">
+            <span class="status-indicator"></span>
+            <span>ONLINE</span>
+        </div>
+        <div class="status-item">
+            <span>LANG:</span>
+            <span style="color: var(--accent-blue);">Python, Java, SQL</span>
+        </div>
+        <div class="status-item">
+            <span>LOC:</span>
+            <span style="color: var(--accent-purple);">Hong Kong</span>
+        </div>
+        <div class="status-item">
+            <span>UPTIME:</span>
+            <span style="color: var(--accent-green);">11+ years</span>
+        </div>
+        <div class="status-item">
+            <span id="datetime"></span>
+        </div>
+    </div>
+
+    <script>
+        // Update datetime in status bar
+        function updateDateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleString('en-HK', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('datetime').textContent = dateStr;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+    </script>
+</body>
+</html>
