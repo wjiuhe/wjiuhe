@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="William Jiuhe Wang — AI Systems Wrangler | LLM Whisperer | Shipping things that work">
+    <meta name="description" content="William Jiuhe Wang — Bot Shepherd | Model Wrangler | Shipping things that work">
     <title>~ whoami | William Jiuhe Wang</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,9 +72,166 @@
             text-shadow: 0 0 10px currentColor;
         }
         
-        .glow-green { text-shadow: 0 0 10px var(--accent-green); }
-        .glow-blue { text-shadow: 0 0 10px var(--accent-blue); }
-        .glow-purple { text-shadow: 0 0 10px var(--accent-purple); }
+        .glow-green { text-shadow: 0 0 10px var(--accent-green); animation: pulse-green 2s ease-in-out infinite; }
+        .glow-blue { text-shadow: 0 0 10px var(--accent-blue); animation: pulse-blue 2s ease-in-out infinite; }
+        .glow-purple { text-shadow: 0 0 10px var(--accent-purple); animation: pulse-purple 2s ease-in-out infinite; }
+        
+        @keyframes pulse-green {
+            0%, 100% { text-shadow: 0 0 10px var(--accent-green); }
+            50% { text-shadow: 0 0 20px var(--accent-green), 0 0 30px var(--accent-green); }
+        }
+        
+        @keyframes pulse-blue {
+            0%, 100% { text-shadow: 0 0 10px var(--accent-blue); }
+            50% { text-shadow: 0 0 20px var(--accent-blue), 0 0 30px var(--accent-blue); }
+        }
+        
+        @keyframes pulse-purple {
+            0%, 100% { text-shadow: 0 0 10px var(--accent-purple); }
+            50% { text-shadow: 0 0 20px var(--accent-purple), 0 0 30px var(--accent-purple); }
+        }
+        
+        /* Neural Network Background */
+        #neural-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        /* Matrix Rain Effect */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.05;
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+        
+        /* Typing Animation */
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 2s steps(20, end);
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        /* Float Animation */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Card Hover Effects */
+        .card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--accent-green);
+            box-shadow: 0 20px 40px rgba(126, 231, 135, 0.2);
+        }
+        
+        /* Skill Tag Hover */
+        .skill-tag {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .skill-tag:hover {
+            transform: translateY(-3px) rotate(2deg);
+            box-shadow: 0 5px 15px rgba(121, 192, 255, 0.3);
+        }
+        
+        /* Link Hover Glow */
+        .nav-links a {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Terminal Dot Animation */
+        .terminal-dot {
+            animation: dot-pulse 2s ease-in-out infinite;
+        }
+        
+        .terminal-dot:nth-child(2) { animation-delay: 0.2s; }
+        .terminal-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+        
+        /* Data Stream Effect */
+        .data-stream {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .data-stream::before {
+            content: '01001000 01100101 01101100 01101100 01101111';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            color: var(--accent-green);
+            opacity: 0.1;
+            font-size: 10px;
+            animation: stream 10s linear infinite;
+            white-space: nowrap;
+        }
+        
+        @keyframes stream {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
         
         /* Container */
         .container {
@@ -450,6 +607,9 @@
     </style>
 </head>
 <body>
+    <canvas id="matrix-canvas"></canvas>
+    <canvas id="neural-canvas"></canvas>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-content">
@@ -508,7 +668,7 @@
                         William Jiuhe Wang
                     </div>
                     <div style="color: var(--accent-blue); font-size: 16px; margin-bottom: 16px;">
-                        AI Systems Wrangler // LLM Whisperer
+                        Bot Shepherd // Model Wrangler
                     </div>
                     <div style="color: var(--text-secondary); max-width: 600px;">
                         11+ years shipping code that matters. Production-grade AI systems, real-time data pipelines, 
@@ -651,7 +811,7 @@
         </div>
         
         <!-- WeLab -->
-        <div class="card">
+        <div class="card glitch data-stream">
             <div class="card-header">
                 <div>
                     <div class="card-title">WeLab Bank</div>
@@ -701,7 +861,7 @@
         </div>
         
         <!-- Lenovo -->
-        <div class="card">
+        <div class="card glitch data-stream">
             <div class="card-header">
                 <div>
                     <div class="card-title">Lenovo</div>
@@ -724,7 +884,7 @@
         </div>
 
         <!-- Cypress Jade & NaturalFarm -->
-        <div class="card">
+        <div class="card glitch data-stream">
             <div class="card-header">
                 <div>
                     <div class="card-title">Cypress Jade (HK875) & NaturalFarm</div>
@@ -783,8 +943,8 @@
                 <tr>
                     <td><span style="color: var(--accent-purple);">credit-assistant</span></td>
                     <td>gemini-pro:latest</td>
-                    <td><span style="color: var(--accent-green);">Running</span></td>
-                    <td>Explains why the answer is "maybe"</td>
+                    <td><span style="color: var(--accent-yellow);">Warmup</span></td>
+                    <td>Explains why the answer is "maybe" (beta)</td>
                 </tr>
                 <tr>
                     <td><span style="color: var(--accent-orange);">fx-comparison</span></td>
@@ -880,6 +1040,112 @@
         }
         updateDateTime();
         setInterval(updateDateTime, 60000);
+        
+        // Neural Network Animation
+        const neuralCanvas = document.getElementById('neural-canvas');
+        const neuralCtx = neuralCanvas.getContext('2d');
+        neuralCanvas.width = window.innerWidth;
+        neuralCanvas.height = window.innerHeight;
+        
+        const nodes = [];
+        const nodeCount = 30;
+        const connectionDistance = 150;
+        
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push({
+                x: Math.random() * neuralCanvas.width,
+                y: Math.random() * neuralCanvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                radius: Math.random() * 2 + 1
+            });
+        }
+        
+        function drawNeuralNetwork() {
+            neuralCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
+            
+            // Draw connections
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < connectionDistance) {
+                        const opacity = (1 - distance / connectionDistance) * 0.3;
+                        neuralCtx.beginPath();
+                        neuralCtx.moveTo(nodes[i].x, nodes[i].y);
+                        neuralCtx.lineTo(nodes[j].x, nodes[j].y);
+                        neuralCtx.strokeStyle = `rgba(126, 231, 135, ${opacity})`;
+                        neuralCtx.lineWidth = 1;
+                        neuralCtx.stroke();
+                    }
+                }
+            }
+            
+            // Draw nodes
+            nodes.forEach(node => {
+                neuralCtx.beginPath();
+                neuralCtx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                neuralCtx.fillStyle = '#7ee787';
+                neuralCtx.fill();
+                
+                // Update position
+                node.x += node.vx;
+                node.y += node.vy;
+                
+                // Bounce off edges
+                if (node.x < 0 || node.x > neuralCanvas.width) node.vx *= -1;
+                if (node.y < 0 || node.y > neuralCanvas.height) node.vy *= -1;
+            });
+            
+            requestAnimationFrame(drawNeuralNetwork);
+        }
+        
+        drawNeuralNetwork();
+        
+        // Matrix Rain Effect
+        const matrixCanvas = document.getElementById('matrix-canvas');
+        const matrixCtx = matrixCanvas.getContext('2d');
+        matrixCanvas.width = window.innerWidth;
+        matrixCanvas.height = window.innerHeight;
+        
+        const matrixChars = '01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@&*';
+        const fontSize = 14;
+        const columns = matrixCanvas.width / fontSize;
+        const drops = [];
+        
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100;
+        }
+        
+        function drawMatrix() {
+            matrixCtx.fillStyle = 'rgba(13, 17, 23, 0.05)';
+            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            
+            matrixCtx.fillStyle = '#7ee787';
+            matrixCtx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                matrixCtx.fillText(char, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 50);
+        
+        // Resize handler
+        window.addEventListener('resize', () => {
+            neuralCanvas.width = window.innerWidth;
+            neuralCanvas.height = window.innerHeight;
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
